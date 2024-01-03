@@ -1,25 +1,24 @@
 //  "strict mode"
- import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
- import { getStorage , ref  ,uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 // console.log(storage)
- const firebaseConfig = {
-   apiKey: "AIzaSyAlCt9QgdziE69kGc0IZnjDIqMpNvb_-OU",
-   authDomain: "auth-practice-feb12.firebaseapp.com",
-   projectId: "auth-practice-feb12",
-   storageBucket: "auth-practice-feb12.appspot.com",
-   messagingSenderId: "1019160864521",
-   appId: "1:1019160864521:web:0213b8114d85409ecfd5d8"
- };
+const firebaseConfig = {
+  apiKey: "AIzaSyAlCt9QgdziE69kGc0IZnjDIqMpNvb_-OU",
+  authDomain: "auth-practice-feb12.firebaseapp.com",
+  projectId: "auth-practice-feb12",
+  storageBucket: "auth-practice-feb12.appspot.com",
+  messagingSenderId: "1019160864521",
+  appId: "1:1019160864521:web:0213b8114d85409ecfd5d8"
+};
 
- // Initialize Firebase
- const app = initializeApp(firebaseConfig);
-  // Initialize Firebase storage
- const storage = getStorage();
-
- 
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
 
- const uploadFile = async () => {
+//My updated uploadFileOnFirebaseStorage code
+// Initialize Firebase storage
+const storage = getStorage();
+const uploadFile = async () => {
   try {
     const file = document.querySelector("#image");
     const url = await uploadFileOnFirebaseStorage(file);
@@ -28,6 +27,9 @@
     console.error('Error during file upload:', error.message);
   }
 };
+const uploadBtn = document.querySelector("#uploadBtn")
+uploadBtn.addEventListener("click", uploadFile)
+
 //this function will never save multiple images it saves one then replace that one if updated 
 const uploadFileOnFirebaseStorage = (file) => {
   return new Promise((resolve, reject) => {
@@ -74,25 +76,19 @@ const uploadFileOnFirebaseStorage = (file) => {
   });
 };
 
-// Call the function to initiate the file upload
+
+const file = document.querySelector("#image")
+file.addEventListener("change", (e) => {
+  const selectedImage = document.querySelector("#selectedImage")
+  selectedImage.hidden = false
+  const temporaryUrl = URL.createObjectURL(e.target.files[0]) //this method makes temporary url
+  console.log(temporaryUrl)
+  selectedImage.src = temporaryUrl
+})
 
 
+//sir ghous ahmed uploadFileOnFirebaseStorage  code
 
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
- 
 //  const uploadFileOnFirebaseStorage = (file)=>{
 //   return new Promise((resolve,reject)=>{
 //     const fileName = file.files[0].name
@@ -114,7 +110,7 @@ const uploadFileOnFirebaseStorage = (file) => {
 //       console.log('Upload is running');
 //       break;
 //   }
-// }, 
+// },
 // (error) => {
 //   reject(error)
 //   // A full list of error codes is available at
@@ -133,7 +129,7 @@ const uploadFileOnFirebaseStorage = (file) => {
 //       // Unknown error occurred, inspect error.serverResponse
 //       break;
 //   }
-// }, 
+// },
 // () => {
 //   // Upload completed successfully, now we can get the download URL
 //   getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -159,23 +155,5 @@ const uploadFileOnFirebaseStorage = (file) => {
 
 //  }
 
+//complete
 
-
- const uploadBtn = document.querySelector("#uploadBtn")
-
- uploadBtn.addEventListener("click",uploadFile)
-
-
-
-
- const file = document.querySelector("#image")
-
-
-
- file.addEventListener("change" , (e)=>{
-const selectedImage = document.querySelector("#selectedImage")
-selectedImage.hidden = false
-const  temporaryUrl =  URL.createObjectURL(e.target.files[0]) //this method makes temporary url
-console.log(temporaryUrl)
-selectedImage.src = temporaryUrl 
-})
